@@ -1,0 +1,10 @@
+/home/ulocker/nohup_ulocker.log {
+        daily
+        rotate 10
+        copytruncate
+        missingok
+        dateext
+        dateformat -%Y-%m-%d.%H%M
+        compress
+        olddir /home/ulocker/old_logs
+}

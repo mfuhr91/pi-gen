@@ -1,0 +1,39 @@
+GinMode = "debug"
+ServicePort = 9040
+LogFile = ""
+CloudAPI =  "https://dev-api.ulocker.ar"
+Token = ""
+
+SpacesOpenIntervalMs = 500 # milliseconds
+VaultOpenTimeRangeMs = 30000 # milliseconds
+BranchID = "e692fb46-f829-40be-aba7-e853362bb55d" #"e692fb46-f829-40be-aba7-e853362bb55d" #"79eb99b5-1758-4c47-b866-a6be862137e3"
+BranchName = "Rivadavia 132"
+BeforeBookingGraceMinutes = 10
+RaspberryPinsDisabled = false
+MonitorDisabled = true
+UseI2C = false
+
+# should be set from UI
+TerminalCode = "32840283"
+
+AdminUser = 9410
+AdminCodes = []
+
+CleanUser = 9876
+CleanPass = []
+
+ExtraCodes = []
+
+[Redis]
+Host = "localhost"
+Port = 6379
+
+[Terminal]
+Hostname = "new_raspi"
+
+
+[MQTT]
+Broker="w449f262.ala.us-east-1.emqxsl.com"
+User="ulocker"
+Pass=""
+CACertFile="emqxsl-ca.crt"

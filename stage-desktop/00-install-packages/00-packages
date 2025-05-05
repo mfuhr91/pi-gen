@@ -1,0 +1,9 @@
+lightdm
+lightdm-gtk-greeter
+xserver-xorg
+xinit
+x11-xserver-utils
+lxsession
+openbox
+lxpanel
+pcmanfm

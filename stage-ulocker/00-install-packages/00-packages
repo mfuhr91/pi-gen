@@ -1,0 +1,10 @@
+initramfs-tools
+overlayroot
+redis
+nginx
+i2c-tools
+xdotool
+unclutter
+sed
+cloud-guest-utils
+ufw

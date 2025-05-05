@@ -1,0 +1,20 @@
+[Unit]
+Description=Chromium Kiosk
+Wants=graphical.target
+After=graphical.target
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+[Service]
+Environment=XAUTHORITY=/home/ulocker/.Xauthority
+Type=simple
+ExecStart=/bin/bash /home/ulocker/kiosk.sh
+ExecStartPre=/bin/sleep 5
+User=ulocker
+Group=ulocker
+TimeoutStopSec=60
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=graphical.target
