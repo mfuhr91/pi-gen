@@ -10,7 +10,7 @@ fi
 
 # Ensure gparted is installed
 if ! command -v gparted &> /dev/null; then
-   echo "[$(date "+%H:%M:%S")] Installing gparted..."
+  echo "[$(date "+%H:%M:%S")] Installing gparted..."
   sudo apt-get update && sudo apt-get install -y gparted
 fi
 
@@ -21,29 +21,28 @@ SECTORS_10G=$((10 * 1024 * 1024 * 1024 / SECTOR_SIZE))
 START_SECTOR=$((SECTORS_TOTAL - SECTORS_10G))
 ROOT_PART="${DISK}2"
 
-# Resize partition 2 to fill up to new partition start
-# echo "Resizing partition 2 to end at sector $((START_SECTOR - 1))..."
-# sfdisk --no-reread --force "$DISK" <<EOF
-# label: dos
-# unit: sectors
-#
-# ${DISK}1 : start=        8192, size=     $((1056767 - 8192 + 1)), type=c
-# ${DISK}2 : start=     1056768, size=  $((START_SECTOR - 1056768)), type=83
-# EOF
-#
-# partprobe "$DISK"
-# udevadm settle
-# sleep 2
+# Resize partition 2 to fill up to START_SECTOR
+START2=$(sfdisk -d "$DISK" | grep "${DISK}2" | awk '{print $4}' | sed 's/,//')
 
-# Resize filesystem on partition 2
-# echo "Resizing filesystem on $ROOT_PART..."
-# e2fsck -f "$ROOT_PART" || { echo "❌ Filesystem initial check failed on $ROOT_PART"; exit 1; }
-# resize2fs "$ROOT_PART"
-#
-# echo "Checking integrity of $ROOT_PART after resize..."
-# e2fsck -f "$ROOT_PART" || { echo "❌ Filesystem after resize check failed on $ROOT_PART"; exit 1; }
+echo "[$(date "+%H:%M:%S")] Expanding ${DISK}2 from sector $START2 to sector $((START_SECTOR - 1))..."
 
-# Create home partition
+# Delete and recreate root partition with expanded size
+sfdisk --delete "$DISK" 2
+echo "${START2},$((START_SECTOR - START2))" | sfdisk --no-reread --append "$DISK"
+
+partprobe "$DISK"
+udevadm settle
+sleep 2
+
+ROOT_PART="${DISK}2"
+
+# Resize filesystem
+echo "[$(date "+%H:%M:%S")] Checking and resizing filesystem on $ROOT_PART..."
+e2fsck -f "$ROOT_PART" || { echo "❌ Previous resize filesystem check failed on $ROOT_PART"; exit 1; }
+resize2fs "$ROOT_PART"
+e2fsck -f "$ROOT_PART" || { echo "❌ After resize filesystem check failed on $ROOT_PART"; exit 1; }
+
+# Create new /home partition
 echo "[$(date "+%H:%M:%S")] Creating new 10GiB partition at sector $START_SECTOR on $DISK..."
 echo "$START_SECTOR,,83" | sfdisk --append "$DISK" --no-reread
 
@@ -88,4 +87,4 @@ echo "[$(date "+%H:%M:%S")] fstab updated: PARTUUID=$PARTUUID /home ext4 default
 # ✅ Unmount and done
 umount /mnt/sdroot
 
-echo "[$(date "+%H:%M:%S")] ✅ Partition resized and /home moved."
+echo "[$(date "+%H:%M:%S")] ✅ Root expanded and /home moved to new partition."
