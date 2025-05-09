@@ -2,8 +2,7 @@
 Description=U LOCKER service
 After=redis-server.service
 Requires=redis-server.service
-StartLimitIntervalSec=60
-StartLimitBurst=5
+StartLimitIntervalSec=0
 
 [Service]
 Type=simple
@@ -11,9 +10,9 @@ WorkingDirectory=/home/ulocker
 ExecStart=/home/ulocker/ulocker_service
 User=ulocker
 Group=ulocker
-TimeoutStopSec=60
-Restart=always
-RestartSec=10
+TimeoutStopSec=30
+Restart=on-failure
+RestartSec=5
 StandardOutput=append:/home/ulocker/nohup_ulocker.log
 StandardError=append:/home/ulocker/nohup_ulocker.log
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-install -m 644 "${STAGE_DIR}/files/ulocker_service" "${ROOTFS_DIR}/home/ulocker/ulocker_service"
+install -m 755 "${STAGE_DIR}/files/ulocker_service" "${ROOTFS_DIR}/home/ulocker/ulocker_service"
 install -m 644 "${STAGE_DIR}/files/conf.toml" "${ROOTFS_DIR}/home/ulocker/conf.toml"
 
 install -m 644 "${STAGE_DIR}/files/ui.zip" "${ROOTFS_DIR}/home/ulocker/ui.zip"
