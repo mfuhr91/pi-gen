@@ -3,8 +3,6 @@ set -e
 
 on_chroot << EOF
 
-bash /home/ulocker/serve_ui.sh
-
 systemctl daemon-reload
 systemctl enable kiosk.service
 systemctl start kiosk.service

@@ -1,6 +1,9 @@
 #!/bin/bash
 
-systemctl stop redis-server
-cd /var/lib/redis
+systemctl stop redis
+cd /home/redis-data
+rm -rf appendonlydir.bak
 mv dump.rdb dump.rdb.bak
-mv appendonly.aof appendonly.aof.bak
+mv appendonlydir appendonlydir.bak
+systemctl start redis
+systemctl restart ulocker

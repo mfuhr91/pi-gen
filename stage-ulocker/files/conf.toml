@@ -1,7 +1,7 @@
 GinMode = "debug"
 ServicePort = 9040
 LogFile = ""
-CloudAPI =  "https://dev-api.ulocker.ar"
+CloudAPI = "https://dev-api.ulocker.ar"
 Token = ""
 
 SpacesOpenIntervalMs = 500 # milliseconds
@@ -10,7 +10,7 @@ BranchID = "e692fb46-f829-40be-aba7-e853362bb55d" #"e692fb46-f829-40be-aba7-e853
 BranchName = "Rivadavia 132"
 BeforeBookingGraceMinutes = 10
 RaspberryPinsDisabled = false
-MonitorDisabled = true
+MonitorDisabled = false
 UseI2C = false
 
 # should be set from UI

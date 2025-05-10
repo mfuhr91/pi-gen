@@ -40,7 +40,6 @@ ROOT_PART="${DISK}2"
 echo "[$(date "+%H:%M:%S")] Checking and resizing filesystem on $ROOT_PART..."
 e2fsck -f "$ROOT_PART" || { echo "❌ Previous resize filesystem check failed on $ROOT_PART"; exit 1; }
 resize2fs "$ROOT_PART"
-e2fsck -f "$ROOT_PART" || { echo "❌ After resize filesystem check failed on $ROOT_PART"; exit 1; }
 
 # Create new /home partition
 echo "[$(date "+%H:%M:%S")] Creating new 10GiB partition at sector $START_SECTOR on $DISK..."
